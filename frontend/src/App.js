@@ -1,15 +1,43 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './pages/home';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import HomePage from './pages/HomePage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Navbar from './components/navbar';
+import { Admin } from './pages/AdminDashboard/Admin';
+import UserDash from './pages/UserdashBoard/UserDash';
+import ProtectedRoute from './components/ProtectedRoute';
+
+
 
 function App() {
   return (
-    <Router>
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
-  </Router>
+    <div className="App">
+        {/* <Navbar /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path='/Login' element={<Login />} />
+          <Route path='/Register' element={<Register />} />
+          {/* <Route path='/AdminDashBoard' element ={<Admin/>} />
+          <Route path='/StudentDashboard' element ={<UserDash/>} /> */}
+
+           {/* Protected Routes */}
+           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+                    <Route path="/AdminDashBoard" element={<Admin />} />
+                </Route>
+
+                <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+                    <Route path="/StudentDashboard" element={<UserDash />} />
+                </Route>
+
+        </Routes>
+      </Router>
+
+
+    </div>
   );
 }
 

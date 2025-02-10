@@ -10,12 +10,12 @@ const addVideo = async (req, res) => {
 
         const parsid = parseInt(id)
         const videoFile =  req.file ? req.file.filename : null
-
+        const cat_no = parseInt(cat_id)
         const videoData = {
             id:parsid,
             title,
             description,
-            cat_id,
+            cat_id:cat_no,
             videoFile:videoFile
         }
 

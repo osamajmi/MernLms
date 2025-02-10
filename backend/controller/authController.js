@@ -28,7 +28,14 @@ const registerStd = async (req,res)=>{
         }
 
          const db = client.db('StdLms');
-         const result = await db.collection("Student").insertOne(StdData);
+         const user = await db.collection('Student').findOne({userId:userId})
+         if(user){
+            return res.status(200).json({message:"User already exist "})
+         }
+         if(!user){
+            const result = await db.collection('Student').insertOne(StdData)
+         }
+        //  const result = await db.collection("Student").insertOne(StdData);
 
          res.status(201).json({message : "student register Sucess "})
 
@@ -52,7 +59,7 @@ const UserLogin = async (req,res)=>{
             const isValid = await bcrypt.compare(password, foundUser.password);
 
             if(isValid){
-                const token = jwt.sign({ userId: foundUser.userId ,role : foundUser.role }, 'secretkey', { expiresIn: '1h'})
+                const token = jwt.sign({ userId: foundUser.userId ,role : foundUser.role }, 'Lms@@1234jmi', { expiresIn: '1h'})
                 res.status(200).json({token : token, userId:userId ,name : foundUser.name , role: foundUser.role})
             }
             else{
@@ -129,6 +136,20 @@ const deleteUser = async (req,res)=>{
         res.status(500).json({error: " server error "})
     }
     
+}
+
+const idValidate =  async (req,res)=>{
+    try{
+
+        const db = client.db('StdLms');
+        const result = await db.collection("Student").find({}).toArray();
+        res.status(200).json(result.userId)
+
+
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
 

@@ -70,5 +70,19 @@ const deleteCat = async (req,res)=>{
     }
 }
 
+const getCat = async (req,res)=>{
+    try{
 
-module.exports = {createCategory,editCategory,deleteCat};
+        const db = client.db("StdLms")
+        const categories = await db.collection("Categories").find().toArray();
+        res.status(200).json(categories)
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({error:"server error"})
+    }
+}
+
+
+module.exports = {createCategory,editCategory,deleteCat,getCat};

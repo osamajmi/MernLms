@@ -1,6 +1,6 @@
 const express = require("express");
 const { registerStd,  UserLogin, stdData, stdId, deleteUser } = require("../controller/authController"); 
-const { createCategory, editCategory, deleteCat } = require("../controller/createCategories");
+const { createCategory, editCategory, deleteCat, getCat } = require("../controller/createCategories");
 const {uploadProfile} = require('../middleware/UploadProfile');
 const { addVideo, getvideo, videoDelete } = require("../controller/AddVideo");
 const { uploadVideo } = require("../middleware/Uploadvideo");
@@ -31,6 +31,10 @@ router.put("/editCat/:cat_id",editCategory);
 // delete cat 
 
 router.delete("/deleteCat/:cat_id",deleteCat)
+
+// get All categories
+
+router.get("/categories",getCat)
 
 // add video 
 
